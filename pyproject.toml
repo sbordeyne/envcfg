@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "envconfig"
+name = "envcfg"
 version = "1.0.0"
 description = "Use a decorator to specify environment variables with automatic type parsing!"
 authors = ["Dogeek <simon.bordeyne@gmail.com>"]
@@ -14,6 +14,9 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
 
 [tool.poe.tasks]
 add_changelog  = { script = "scripts.add_changelog:main" }
@@ -68,7 +71,7 @@ message_template = "[version] Bump to {new_version}"
 tag_template = "v{new_version}"
 
 [[tool.tbump.file]]
-src = "envconfig/__init__.py"
+src = "envcfg/__init__.py"
 
 # You can specify a list of commands to
 # run after the files have been patched
