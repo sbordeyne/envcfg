@@ -17,6 +17,7 @@ python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
+pytest-cov = "^4.0.0"
 
 [tool.poe.tasks]
 add_changelog  = { script = "scripts.add_changelog:main" }

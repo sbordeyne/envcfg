@@ -13,20 +13,6 @@ class ParsedConfig(BaseConfig):
             return self._parse_collection(varname, varvalue, vartype)
         return self._parse_item(varname, varvalue, vartype)
 
-    def _is_collection(self, vartype: VarType) -> bool:
-        collection_types = (
-            list,
-            tuple,
-            set,
-            frozenset,
-            dict,
-        )
-        if hasattr(vartype, "__origin__") and vartype.__origin__ in collection_types:
-            return True
-        if vartype in collection_types:
-            return True
-        return False
-
     def _parse_collection(
         self, varname: str, varvalue: str, vartype: VarType
     ) -> VarType:
@@ -37,9 +23,10 @@ class ParsedConfig(BaseConfig):
             return self._parse_set(varname, varvalue, vartype)
         if origin is dict:
             return self._parse_dict(varname, varvalue, vartype)
-        raise ValueError(f"Unsupported type {vartype} for {varname}")
 
     def _parse_list(self, varname: str, varvalue: str, vartype: VarType) -> VarType:
+        if not varvalue:
+            return tuple()
         if hasattr(vartype, "__args__") and vartype.__args__:
             return tuple(
                 self._parse_item(varname, item, vartype.__args__[0])
@@ -51,13 +38,15 @@ class ParsedConfig(BaseConfig):
         )
 
     def _parse_set(self, varname: str, varvalue: str, vartype: VarType) -> VarType:
+        if not varvalue:
+            return frozenset()
         if hasattr(vartype, "__args__") and vartype.__args__:
             return frozenset(
                 self._parse_item(varname, item, vartype.__args__[0])
                 for item in varvalue.split(self._delimiter)
             )
         return frozenset(
-            self._parse_item(varname, item, vartype.__args__[0])
+            self._parse_item(varname, item, str)
             for item in varvalue.split(self._delimiter)
         )
 
@@ -95,7 +84,7 @@ class ParsedConfig(BaseConfig):
             return self._parse_base85(varname, item)
         if vartype is JSON:
             return self._parse_json(varname, item)
-        raise ValueError(f"Unsupported type {vartype} for {varname}")
+        raise TypeError(f"Unsupported type {vartype} for {varname}")
 
     def _parse_int(self, varname: str, item: str) -> int:
         if item.startswith("0o"):
