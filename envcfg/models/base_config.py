@@ -20,14 +20,18 @@ class BaseConfig(metaclass=abc.ABCMeta):
         self._delimiter = delimiter
         self._prefix = prefix
         self._parsers = parsers or {}
-        for varname, vartype in klass.__annotations__.items():
+        self._klass = klass
+        self.init()
+
+    def init(self):
+        for varname, vartype in self._klass.__annotations__.items():
             if varname.startswith("_"):
                 continue
             envname = varname
-            if prefix:
-                envname = f"{prefix}_{envname}"
+            if self._prefix:
+                envname = f"{self._prefix}_{envname}"
             envname = envname.upper()
-            default = getattr(klass, varname, None)
+            default = getattr(self._klass, varname, None)
             varvalue = os.getenv(envname, default)
             if self._is_collection(vartype, (set, frozenset, list, tuple)) and varvalue is None:
                 varvalue = ""
