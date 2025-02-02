@@ -3,8 +3,8 @@ import json
 import os
 from pathlib import Path
 
-from configdataclass.models import BaseConfig
-from configdataclass.types import VarType, Base64, Base85, JSON
+from classenv.models import BaseConfig
+from classenv.types import VarType, Base64, Base85, JSON
 
 
 class ParsedConfig(BaseConfig):

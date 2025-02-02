@@ -1,7 +1,7 @@
 from typing import Callable, Type
 
-from configdataclass.models import ParsedConfig, RawConfig
-from configdataclass.types import T, ParserCallback
+from classenv.models import ParsedConfig, RawConfig
+from classenv.types import T, ParserCallback
 
 
 def environment(

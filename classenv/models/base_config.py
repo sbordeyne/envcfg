@@ -2,7 +2,7 @@ import abc
 import os
 from typing import Any, Type
 
-from configdataclass.types import VarType, T, ParserCallback
+from classenv.types import VarType, T, ParserCallback
 
 
 class BaseConfig(metaclass=abc.ABCMeta):

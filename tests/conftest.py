@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from configdataclass import environment, Base64, Base85, JSON
+from classenv import environment, Base64, Base85, JSON
 
 
 @pytest.fixture()
