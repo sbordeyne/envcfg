@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "envcfg"
+name = "configdataclass"
 version = "1.1.0"
 description = "Use a decorator to specify environment variables with automatic type parsing!"
 authors = ["Dogeek <simon.bordeyne@gmail.com>"]
@@ -16,17 +16,18 @@ classifiers = [
 python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.3.0"
-pytest-cov = "^4.0.0"
+black = "^25.1.0"
+pytest = "^8.3.4"
+pytest-cov = "^6.0.0"
+mypy = "^1.14.1"
+isort = "^6.0.0"
+ruff = "^0.9.4"
 
 [tool.poe.tasks]
 add_changelog  = { script = "scripts.add_changelog:main" }
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
 pylama = "^8.3.7"
-yapf = "^0.32.0"
-isort = "^5.10.1"
 requests = "^2.27.1"
 poethepoet = "^0.12.2"
 toml = "^0.10.2"
@@ -36,22 +37,6 @@ sphinx = '*'
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.yapf]
-based_on_style = 'pep8'
-spaces_before_comment = 2
-split_before_logical_operator = true
-split_before_arithmetic_operator = true
-split_before_bitwise_operator = true
-split_complex_comprehension = true
-split_before_first_argument = true
-split_before_dot = true
-split_before_dict_set_operator = true
-split_before_closing_bracket = true
-each_dict_entry_on_separate_line = true
-dedent_closing_brackets = true
-column_limit = 119
-coalesce_brackets = true
 
 [tool.tbump]
 # Uncomment this if your project is hosted on GitHub:

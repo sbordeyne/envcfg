@@ -3,8 +3,8 @@ from typing import Generic, TypeVar
 
 import pytest
 
-from envcfg import environment
-from envcfg.models import BaseConfig
+from configdataclass import environment
+from configdataclass.models import BaseConfig
 
 
 def test_parsed_config_correct(config):

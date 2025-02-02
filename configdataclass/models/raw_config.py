@@ -1,5 +1,5 @@
-from envcfg.models import BaseConfig
-from envcfg.types import VarType
+from configdataclass.models import BaseConfig
+from configdataclass.types import VarType
 
 
 class RawConfig(BaseConfig):

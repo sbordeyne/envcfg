@@ -3,8 +3,8 @@ import json
 import os
 from pathlib import Path
 
-from envcfg.models import BaseConfig
-from envcfg.types import VarType, Base64, Base85, JSON
+from configdataclass.models import BaseConfig
+from configdataclass.types import VarType, Base64, Base85, JSON
 
 
 class ParsedConfig(BaseConfig):
@@ -118,3 +118,6 @@ class ParsedConfig(BaseConfig):
 
     def _parse_json(self, varname: str, item: str) -> JSON:
         return json.loads(item)
+
+    def to_json(self) -> str:
+        return json.dumps(self._as_dict, indent=2)

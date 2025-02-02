@@ -1,8 +1,8 @@
 import abc
 import os
-from typing import Type
+from typing import Any, Type
 
-from envcfg.types import VarType, T, ParserCallback
+from configdataclass.types import VarType, T, ParserCallback
 
 
 class BaseConfig(metaclass=abc.ABCMeta):
@@ -21,7 +21,13 @@ class BaseConfig(metaclass=abc.ABCMeta):
         self._prefix = prefix
         self._parsers = parsers or {}
         self._klass = klass
+        self._as_dict = {}
         self.init()
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        super().__setattr__(name, value)
+        if not name.startswith("_"):
+            self._as_dict[name] = value
 
     def init(self):
         for varname, vartype in self._klass.__annotations__.items():
@@ -43,7 +49,7 @@ class BaseConfig(metaclass=abc.ABCMeta):
                 )
             setattr(self, varname, self._parse(varname, varvalue, vartype))
 
-    def _is_collection(self, vartype: VarType, collection_types: tuple[type] = None) -> bool:
+    def _is_collection(self, vartype: VarType, collection_types: tuple[type] | None = None) -> bool:
         if collection_types is None:
             collection_types = (
                 list,
